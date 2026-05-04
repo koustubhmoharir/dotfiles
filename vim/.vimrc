@@ -2,6 +2,20 @@
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
+" set cursor to be a blinking line in insert mode
+let &t_SI .= "\<Esc>[5 q"
+" set cursor to be a solid box in normal mode
+let &t_EI .= "\<Esc>[2 q"
+" set cursor to be a blinking box in replace mode
+let &t_SR .= "\<Esc>[1 q"
+" set cursor to replace mode when leaving buffer in all windows
+" revert cursor back to normal mode when entering buffer
+augroup CursorShape
+  autocmd!
+  autocmd BufEnter * execute 'silent !echo -ne "' . &t_EI . '"'
+  autocmd BufWinLeave * execute 'silent !echo -ne "' . &t_SI . '"'
+augroup END
+
 " Enable the mouse in all modes
 set mouse=a
 
