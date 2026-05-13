@@ -18,6 +18,7 @@ augroup END
 
 " Enable the mouse in all modes
 set mouse=a
+set scrolloff=0
 
 " Without this, dragging window separators doesn't work
 set ttymouse=sgr
@@ -28,6 +29,12 @@ set shiftwidth=4 smarttab
 set expandtab
 set autoindent
 set smartindent
+set ignorecase smartcase
+
+set timeout           " Enable timeout for mappings (Leader key)
+set ttimeout          " Enable timeout for terminal key codes (Esc)
+set timeoutlen=300   " Wait 1000ms for mapping completion (Leader key)
+set ttimeoutlen=10    " Wait only 10ms for terminal key codes (Escape)
 
 " Without this basic horizontal movements don't wrap
 set whichwrap+=<,>,[,],h,l
@@ -69,8 +76,13 @@ nnoremap <silent> <End> g$
 inoremap <silent> <Home> <C-o>g^
 inoremap <silent> <End> <C-o>g$
 
-" Remap Alt w to write the file from insert mode
-inoremap w <C-o>:w<CR>
+" Remap \w to write the file from insert mode
+inoremap <Leader>w <C-o>:w<CR>
+
+" Remap Alt w and Alt u to delete forward unlike Ctrl w and Ctrl u that delete
+" backward
+inoremap w <C-o>dw
+inoremap u <C-o>d$
 
 " Flash the cursor line with \c
 nnoremap <silent> <Leader>c :set cursorline<CR>:sleep 300m<CR>:set nocursorline<CR>
