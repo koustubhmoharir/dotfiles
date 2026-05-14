@@ -16,6 +16,7 @@ augroup CursorShape
   autocmd BufWinLeave * execute 'silent !echo -ne "' . &t_SI . '"'
 augroup END
 
+colorscheme desert
 " Enable the mouse in all modes
 set mouse=a
 set scrolloff=0
@@ -76,8 +77,11 @@ nnoremap <silent> <End> g$
 inoremap <silent> <Home> <C-o>g^
 inoremap <silent> <End> <C-o>g$
 
-" Remap \w to write the file from insert mode
-inoremap <Leader>w <C-o>:w<CR>
+" Save with Ctrl+S in Normal mode (assumes ctrl+S does not freeze terminal)
+nnoremap <C-s> :update<CR>
+
+" Save with Ctrl+S in Insert mode (then returns to Insert mode)
+inoremap <C-s> <C-O>:update<CR>
 
 " Remap Alt w and Alt u to delete forward unlike Ctrl w and Ctrl u that delete
 " backward
@@ -93,6 +97,14 @@ nnoremap yy "+yy
 xnoremap y "+y
 
 set foldcolumn=3
+set foldmethod=syntax
+set foldlevel=99
+
+" Fold sections, default `0`.
+let g:asciidoctor_folding = 1
+
+" Fold options, default `0`.
+let g:asciidoctor_fold_options = 1
 
 " Allow buffers to be hidden without prompting to write them first
 set hidden
@@ -100,3 +112,54 @@ set hidden
 " When a window is split, set the new window to appear at the bottom or right
 set splitbelow
 set splitright
+
+" Code to install vim-plug (plugin manager for vim) automatically
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" List of plugins (plugin names are github repo names?)
+call plug#begin()
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'preservim/nerdtree'
+" Plug 'tpope/vim-obsession'
+Plug 'habamax/vim-asciidoctor'
+call plug#end()
+
+" Add the Ctrl + Y shortcut to copy a filename from the Files window.
+" This is based on https://github.com/junegunn/fzf.vim/issues/772#issuecomment-467283202
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit',
+      \ 'ctrl-y': {lines -> setreg('+', join(lines, "\n"))}}
+
+" Map \f to the fzf Files command and \b to Buffers
+" The ! after the command opens the fzf window full screen
+nnoremap <silent> <Leader>f :Files!<CR>
+nnoremap <silent> <Leader>g :GFiles!<CR>
+nnoremap <silent> <Leader>b :Buffers!<CR>
+nnoremap <silent> <Leader>t :NERDTree<CR>
+
+" Improve the DiffOrig command added by defaults.vim
+" This command opens a vertically split diff in a new tab
+" The original (saved) file is shown as a non modifiable buffer
+" It is sufficient to simply close the tab to exit everything cleanly
+command! DiffOrig tab split | vert new | set bt=nofile | r ++edit # | 0d_
+        \ | setlocal nomodifiable bufhidden=wipe nobuflisted noswapfile
+        \ | silent f Original | diffthis | wincmd p | diffthis
+
+" When there are multiple windows open, the bd command closes the active
+" window too and this seems unintuitive. The Bd command below works around
+" this to load the previous buffer, split the window, load the next (original)
+" buffer in the split window and then delete the buffer to keep the window
+" layout as it originally was. This will still not work if the previous buffer
+" is the same as the current buffer.
+command Bd bp | sp | bn | bd
