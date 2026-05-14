@@ -50,10 +50,6 @@ set relativenumber number
 
 set showcmd
 
-" remap the Enter key to insert a newline before the cursor while remaining in normal mode. Shift Enter will insert a newline after the cursor.
-nnoremap <CR> i<CR><Esc>
-nnoremap <S-CR> a<CR><Esc>
-
 " remap Alt k, Alt j, Alt Up, Alt Down to move the current line up and down
 " Due to some limitations of terminal interaction, the input sequence is
 " specified as the raw input obtained by pressing Ctrl v followed by the
