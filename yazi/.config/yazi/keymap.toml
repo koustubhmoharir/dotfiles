@@ -1,4 +1,9 @@
 [[mgr.prepend_keymap]]
+on = [ "<Enter>" ]
+run = "enter"
+desc = "Enter directory"
+
+[[mgr.prepend_keymap]]
 on = [ "1" ]
 run = "plugin relative-motions 1"
 desc = "Move in relative steps"
