@@ -177,3 +177,21 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+cc_start_session_log() {
+    local dir="$HOME/termsessions"
+    mkdir -p "$dir"
+
+    local timestamp
+    timestamp="$(date +'%Y-%m-%d_%H-%M-%S')"
+
+    local raw="$dir/$timestamp.raw"
+    local log="$dir/$timestamp.log"
+
+    script -qef "$raw"
+    col -b < "$raw" | ansifilter > "$log"
+
+    echo
+    echo "Raw:  $raw"
+    echo "Text: $log"
+}
