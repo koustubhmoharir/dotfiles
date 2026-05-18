@@ -1,9 +1,27 @@
 gui:
   theme:
+    activeBorderColor:
+      - '#b4befe' # Lavender
+      - bold
+    inactiveBorderColor:
+      - '#a6adc8' # Subtext0
+    optionsTextColor:
+      - '#89b4fa' # Blue
     selectedLineBgColor:
-      - "#404040"
+      - '#313244' # Surface1
     selectedRangeBgColor:
-      - "#404040"
+      - '#313244'
+    cherryPickedCommitBgColor:
+      - '#45475a' # Surface2
+    cherryPickedCommitTextStyle:
+      - '#a6e3a1' # Green
+    markedBaseCommitTextStyle:
+      - '#fab387' # Peach
+    unstagedChangesColor:
+      - '#f38ba8' # Red
+    defaultTextColor:
+      - '#cdd6f4' # Text
+
 git:
   autoFetch: false
   pagers:
