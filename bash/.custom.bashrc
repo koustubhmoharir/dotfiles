@@ -97,8 +97,17 @@ add_to_path "$HOME/.local/bin"
 # Remove the function so it stays clean
 unset -f add_to_path
 
-# enable fzf key bindings
-source /usr/share/doc/fzf/examples/key-bindings.bash
+# fzf key bindings (new path first, fallback to older path later)
+if [[ -f /usr/share/fzf/shell/key-bindings.bash ]]; then
+  source /usr/share/fzf/shell/key-bindings.bash
+elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
+  source /usr/share/doc/fzf/examples/key-bindings.bash
+fi
+
+# zoxide bindings
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init bash)"
+fi
 
 parent_cmd=$(ps -o comm= -p "$PPID" 2>/dev/null)
 

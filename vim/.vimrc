@@ -1,6 +1,8 @@
-" Load the defaults.vim file first
-unlet! skip_defaults_vim
-source $VIMRUNTIME/defaults.vim
+if filereadable($VIMRUNTIME . '/defaults.vim')
+  " Load the defaults.vim file first
+  unlet! skip_defaults_vim
+  source $VIMRUNTIME/defaults.vim
+endif
 
 " set cursor to be a blinking line in insert mode
 let &t_SI .= "\<Esc>[5 q"
@@ -21,8 +23,10 @@ colorscheme desert
 set mouse=a
 set scrolloff=0
 
-" Without this, dragging window separators doesn't work
-set ttymouse=sgr
+if !has('nvim')
+  " Without this, dragging window separators doesn't work
+  set ttymouse=sgr
+endif
 
 set belloff=all
 set tabstop=4
