@@ -21,9 +21,24 @@ gui:
       - '#f38ba8' # Red
     defaultTextColor:
       - '#cdd6f4' # Text
-
 git:
   autoFetch: false
   pagers:
     - colorArg: always
       pager: delta --dark --side-by-side --paging=never
+customCommands:
+  - key: '<c-t>'
+    context: 'commits'
+    description: 'Diff Options Menu'
+    prompts:
+      - type: 'menu'
+        title: 'Choose Diff Target'
+        key: 'DiffChoice'
+        options:
+          - name: 'Diff with previous commit (Default)'
+            value: 'git diff {{.SelectedLocalCommit.Sha}}~1 {{.SelectedLocalCommit.Sha}}'
+          - name: 'Diff with working tree (difftool)'
+            value: 'git difftool -d {{.SelectedLocalCommit.Sha}}'
+    # The selected option's value gets populated into the Form context variable below
+    command: '{{.Form.DiffChoice}}'
+    output: terminal
