@@ -23,6 +23,7 @@ gui:
       - '#cdd6f4' # Text
 git:
   autoFetch: false
+  autoRefresh: false
   pagers:
     - colorArg: always
       pager: delta --dark --side-by-side --paging=never
