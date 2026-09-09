@@ -62,6 +62,8 @@ nnoremap k :m -2<CR>
 nnoremap j :m +1<CR>
 nnoremap [1;3A :m -2<CR>
 nnoremap [1;3B :m +1<CR>
+nnoremap <M-Up> :m -2<CR>
+nnoremap <M-Down> :m +1<CR>
 
 " Remap up and down arrow keys to move through wrapped lines in both insert
 " and normal modes. The idea is that hjkl keys are for logical navigation and
