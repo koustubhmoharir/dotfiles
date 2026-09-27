@@ -149,3 +149,6 @@ function y() {
 	command rm -f -- "$tmp"
 }
 
+# Create an alias to create or attach to a session named local
+alias zj='zellij attach local --create'
+
