@@ -93,10 +93,32 @@ inoremap u <C-o>d$
 " Flash the cursor line with \c
 nnoremap <silent> <Leader>c :set cursorline<CR>:sleep 300m<CR>:set nocursorline<CR>
 
-" Put yanked (copied) content on the system clipboard automatically
-nnoremap y "+y
-nnoremap yy "+yy
-xnoremap y "+y
+if !has('nvim')
+  function! Osc52Yank()
+    let l:text = getreg(v:event.regname)
+    if empty(l:text)
+      return
+    endif
+
+    let l:b64 = system('base64 -w 0', l:text)
+    let l:b64 = substitute(l:b64, '\s', '', 'g')
+
+    let l:osc = "\<Esc>]52;c;" . l:b64 . "\<Char-07>"
+    call writefile([l:osc], '/dev/tty', 'b')
+  endfunction
+
+  augroup osc52_yank
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call Osc52Yank() | endif
+  augroup END
+endif
+
+if has('nvim')
+  " Put yanked (copied) content on the system clipboard automatically
+  nnoremap y "+y
+  nnoremap yy "+yy
+  xnoremap y "+y
+endif
 
 set foldcolumn=3
 set foldmethod=syntax
