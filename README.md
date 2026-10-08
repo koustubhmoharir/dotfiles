@@ -4,7 +4,7 @@ Install stow if it is not available.
 Run stow_dots.sh to stow into your home directory.
 
 ## List of useful packages
-stow fzf ripgrep fd-find ansifilter git-delta meld podman podman-compose
+stow jq fzf ripgrep fd-find ansifilter git-delta meld podman podman-compose
 Ubuntu: vim-gtk3
 Fedora: vim-x11  gawk keychain
 To set umask on fedora in WSL, sudoedit /etc/profile.d/umask.sh, and enter `umask 0002` in it.

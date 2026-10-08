@@ -1,2 +1,7 @@
 [mgr]
 show_hidden = true
+
+[opener]
+edit = [
+    { run = "bash ~/.local/bin/yazi-zellij-edit.sh %s", desc = "Edit", for = "unix" }
+]
