@@ -5,3 +5,7 @@ show_hidden = true
 edit = [
     { run = "bash ~/.local/bin/yazi-zellij-edit.sh %s", desc = "Edit", for = "unix" }
 ]
+
+[preview]
+wrap = "yes"
+

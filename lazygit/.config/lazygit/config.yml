@@ -25,9 +25,9 @@ git:
   autoFetch: false
   autoRefresh: false
   autoForwardBranches: none
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never --tabs=4
+      command: delta --dark --paging=never --tabs=4
 customCommands:
   - key: '<c-t>'
     context: 'commits'
