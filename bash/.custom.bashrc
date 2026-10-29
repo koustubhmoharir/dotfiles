@@ -1,5 +1,6 @@
 # This controls the default time style in the output of ls
 export TIME_STYLE=long-iso
+export COLORTERM=truecolor
 
 # This improves tab completion
 bind 'set show-all-if-ambiguous on'
